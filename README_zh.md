@@ -176,7 +176,7 @@ image.save("cogview4.png")
 
 其他更多推理代码，请查看:
 
-1. 使用`int4`加载`ext encoder` 以及推理代码的完整注释，查看 [这里](inference/cli_demo_cogview4.py)。
+1. 使用`int4`加载`text encoder` 以及推理代码的完整注释，查看 [这里](inference/cli_demo_cogview4.py)。
 2. 搭建 `gradio` GUI DEMO，查看 [这里](inference/gradio_web_demo.py)
 
 ## 开源协议
