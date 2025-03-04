@@ -91,7 +91,7 @@ Additionally, we recommend that your device has at least `32GB` of RAM to preven
 
 We've tested on multiple benchmarks and achieved the following scores:
 
-#### dpg_bench
+#### DPG-Bench
 
 | Model        | Overall   | Global    | Entity    | Attribute | Relation  | Other     |
 |--------------|-----------|-----------|-----------|-----------|-----------|-----------|
@@ -103,7 +103,7 @@ We've tested on multiple benchmarks and achieved the following scores:
 | Janus-Pro-7B | 84.19     | 86.90     | 88.90     | 89.40     | 89.32     | 89.48     |
 | **CogView4-6B** | **85.13** | 83.85     | 90.35     | **91.17** | **91.14** | 87.29     |
 
-#### Geneval
+#### GenEval
 
 | Model           | Overall  | Single Obj. | Two Obj. | Counting | Colors   | Position | Color attribution |
 |-----------------|----------|-------------|----------|----------|----------|----------|-------------------|
@@ -115,7 +115,7 @@ We've tested on multiple benchmarks and achieved the following scores:
 | Janus-Pro-7B    | **0.80** | **0.99**    | 0.89     | 0.59     | **0.90** | **0.79** | **0.66**          |
 | **CogView4-6B** | 0.73     | **0.99**    | 0.86     | 0.66     | 0.79     | 0.48     | 0.58              |
 
-#### t2i_compbench
+#### T2I-CompBnech
 
 | Model           | Color      | Shape      | Texture    | 2D-Spatial | 3D-Spatial | Numeracy   | Non-spatial Clip | Complex 3-in-1 |
 |-----------------|------------|------------|------------|------------|------------|------------|------------------|----------------|
