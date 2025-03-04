@@ -131,7 +131,7 @@ We've tested on multiple benchmarks and achieved the following scores:
 
 | model           | Precision  | Recall     | F1 Score   | pick@4     |
 |-----------------|------------|------------|------------|------------|
-| kolors          | 0.6094     | 0.1886     | 0.2880     | 0.1633     |
+| Kolors          | 0.6094     | 0.1886     | 0.2880     | 0.1633     |
 | **CogView4-6B** | **0.6969** | **0.5532** | **0.6168** | **0.3265** |
 
 ## Inference Model
