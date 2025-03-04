@@ -1,6 +1,7 @@
 # CogView4 & CogView3 & CogView-3Plus
 
 [Read this in English](./README.md)
+[日本語で読む](./README_ja.md)
 
 <div align="center">
 <img src=resources/logo.svg width="50%"/>
