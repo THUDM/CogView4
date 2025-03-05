@@ -173,10 +173,30 @@ image = pipe(
 image.save("cogview4.png")
 ```
 
-其他更多推理代码，请查看:
-
-1. 使用`int4`加载`text encoder` 以及推理代码的完整注释，查看 [这里](inference/cli_demo_cogview4.py)。
-2. 搭建 `gradio` GUI DEMO，查看 [这里](inference/gradio_web_demo.py)
+## 安装
+```
+git clone https://github.com/THUDM/CogView4
+cd CogView4
+git clone https://huggingface.co/THUDM/CogView4-6B
+pip install -r requirements.txt
+```
+## 运行
+12G VRAM
+```
+MODE=1 python app.py
+```
+24G VRAM 32G RAM
+```
+MODE=2 python app.py
+```
+24G VRAM 64G RAM
+```
+MODE=3 python app.py
+```
+48G VRAM 64G RAM
+```
+MODE=4 python app.py
+```
 
 ## 开源协议
 

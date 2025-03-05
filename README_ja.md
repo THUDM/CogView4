@@ -173,11 +173,30 @@ image = pipe(
 image.save("cogview4.png")
 ```
 
-その他の推論コードについては、以下を確認してください：
-
-1. `int4` を使用して `text encoder`
-   をロードし、完全な注釈付き推論コードを確認するには [こちら](inference/cli_demo_cogview4.py)。
-2. `gradio` GUI DEMO をセットアップするには [こちら](inference/gradio_web_demo.py)
+## Installation
+```
+git clone https://github.com/THUDM/CogView4
+cd CogView4
+git clone https://huggingface.co/THUDM/CogView4-6B
+pip install -r requirements.txt
+```
+## Quickstart
+12G VRAM
+```
+MODE=1 python app.py
+```
+24G VRAM 32G RAM
+```
+MODE=2 python app.py
+```
+24G VRAM 64G RAM
+```
+MODE=3 python app.py
+```
+48G VRAM 64G RAM
+```
+MODE=4 python app.py
+```
 
 ## ライセンス
 

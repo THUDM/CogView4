@@ -1,9 +1,0 @@
-deepspeed>=0.16.3
-transformers>=4.49.0
-gradio>=5.16.0
-accelerate>=1.2.1
-git+https://github.com/huggingface/diffusers.git
-sentencepiece>=0.2.0
-torch>=2.4.1
-openai>=1.61.0
-bitsandbytes>=0.45.2
