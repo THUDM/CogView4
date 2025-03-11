@@ -14,7 +14,7 @@
 <br>  
 <a href="resources/WECHAT.md" target="_blank"> 👋 微信社区</a>  
 <a href="https://arxiv.org/abs/2403.05121" target="_blank"> 📚 CogView3 论文</a>  
-</p>  
+<a href="https://replicate.com/lucataco/cogview4-6b" target="_blank"> 🤖 Replicate</a>
 
 ![showcase.png](resources/showcase.png)
 
