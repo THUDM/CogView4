@@ -20,7 +20,8 @@
 
 ## プロジェクトの更新
 
-- 🔥🔥 ```2025/03/04```: [diffusers](https://github.com/huggingface/diffusers) バージョンの **CogView-4**
+- 🔥🔥 ```2025/03/16```: [CogKit](https://github.com/THUDM/CogKit) は **CogView4** および **CogVideoX** シリーズの微調整と推論のためのフレームワークです。このツールキットを活用することで、私たちのマルチモーダル生成モデルを最大限に活用できます。
+- ```2025/03/04```: [diffusers](https://github.com/huggingface/diffusers) バージョンの **CogView-4**
   モデルを適応し、オープンソース化しました。このモデルは6Bのパラメータを持ち、ネイティブの中国語入力と中国語のテキストから画像生成をサポートしています。オンラインで試すことができます [こちら](https://huggingface.co/spaces/THUDM-HF-SPACE/CogView4)。
 - ```2024/10/13```: [diffusers](https://github.com/huggingface/diffusers) バージョンの **CogView-3Plus-3B**
   モデルを適応し、オープンソース化しました。オンラインで試すことができます [こちら](https://huggingface.co/spaces/THUDM-HF-SPACE/CogView3-Plus-3B-Space)。
