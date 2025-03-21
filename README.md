@@ -8,8 +8,8 @@
 </div>
 
 <p align="center">
-<a href="https://huggingface.co/spaces/THUDM-HF-SPACE/CogView4"  target="_blank"> 🤗 HuggingFace Space</a>  
-<a href="https://modelscope.cn/studios/ZhipuAI/CogView4" target="_blank">  🤖ModelScope Space</a> 
+<a href="https://huggingface.co/spaces/THUDM-HF-SPACE/CogView4"  target="_blank"> 🤗 HuggingFace Space</a>
+<a href="https://modelscope.cn/studios/ZhipuAI/CogView4" target="_blank">  🤖ModelScope Space</a>
 <a href="https://zhipuaishengchan.datasink.sensorsdata.cn/t/4z" target="_blank"> 🛠️ZhipuAI MaaS(Faster)</a>
 <br>
 <a href="resources/WECHAT.md" target="_blank"> 👋 WeChat Community</a>  <a href="https://arxiv.org/abs/2403.05121" target="_blank">📚 CogView3 Paper</a>
@@ -19,7 +19,9 @@
 
 ## Project Updates
 
-- 🔥🔥 ```2025/03/04```: We've adapted and open-sourced the [diffusers](https://github.com/huggingface/diffusers) version
+- 🔥🔥 ```2025/03/24```: We have released the [CogView4-6B-Control](https://huggingface.co/THUDM/CogView4-6B-Control) model! You can also train it yourself using the [training code](https://github.com/huggingface/diffusers/tree/main/examples/cogview4-control).
+  Additionally, we are launching [CogKit](https://github.com/THUDM/CogKit), a powerful toolkit for fine-tuning and inference of the **CogView4** and **CogVideoX** series, allowing you to fully explore our multimodal generation models.
+- ```2025/03/04```: We've adapted and open-sourced the [diffusers](https://github.com/huggingface/diffusers) version
   of **CogView-4** model, which has 6B parameters, supports native Chinese input, and Chinese text-to-image generation.
   You can try it [online](https://huggingface.co/spaces/THUDM-HF-SPACE/CogView4).
 - ```2024/10/13```: We've adapted and open-sourced the [diffusers](https://github.com/huggingface/diffusers) version of
@@ -31,9 +33,9 @@
 
 ## Project Plan
 
-- [X] Diffusers workflow adaptation  
-- [ ] Cog series fine-tuning kits (coming soon)  
-- [ ] ControlNet models and training code  
+- [X] Diffusers workflow adaptation
+- [X] Cog series fine-tuning kits (coming soon)
+- [X] ControlNet models and training code
 
 ## Community Contributions
 
@@ -160,7 +162,7 @@ python prompt_optimize.py --api_key "Zhipu AI API Key" --prompt {your prompt} --
 
 ### Inference Model
 
-Run the model with `BF16` precision:
+Run the model `CogView4-6B` with `BF16` precision:
 
 ```python
 from diffusers import CogView4Pipeline
@@ -185,6 +187,45 @@ image = pipe(
 
 image.save("cogview4.png")
 ```
+
+Run the `CogView4-6B-Control` model with `BF16` precision:
+
+```python
+from diffusers import CogView4ControlPipeline
+import torch
+from diffusers.utils import load_image
+from controlnet_aux import CannyDetector
+
+pipe = CogView4ControlPipeline.from_pretrained("THUDM/CogView4-6B-Control", torch_dtype=torch.bfloat16).to("cuda")
+
+# Open it for reduce GPU memory usage
+pipe.enable_model_cpu_offload()
+pipe.vae.enable_slicing()
+pipe.vae.enable_tiling()
+
+prompt = "这张图片充满了魔幻色彩，展示了“哈利·波特”系列中的经典地标。画面中央是一块古朴的路牌，上面分别写着\"HOGGSMEADE\"和\"HOGWARTS\"，字体独特且具有古老的魔法风格。路牌的材质仿佛是经过岁月洗礼的铁质，表面略显斑驳。背景中矗立着宏伟的霍格沃茨城堡，其高耸的塔楼和石墙透露出神秘与庄严的气息。一盏复古的灯笼装在路牌旁边，微微发光，为整个场景增添了一丝温暖和梦幻的氛围。这幅图像采用了高清摄影风格，细节丰富，使人仿佛置身于魔法世界之中"
+
+control_image = load_image("resources/img.png")
+processor = CannyDetector()
+control_image = processor(
+        control_image, low_threshold=50, high_threshold=200, detect_resolution=control_image.size[0], image_resolution=control_image.size[0]
+)
+
+image = pipe(
+    prompt=prompt,
+    control_image=control_image,
+    guidance_scale=3.5,
+    num_images_per_prompt=1,
+    num_inference_steps=50,
+    width=control_image.size[0],
+    height=control_image.size[1]
+).images[0]
+
+image.save("cogview4_control.png")
+```
+
+![controlnet](resources/controlnet.png)
+
 For more inference code, please check:
 
 1. For using `BNB int4` to load `text encoder` and complete inference code annotations,
@@ -192,30 +233,15 @@ For more inference code, please check:
 2. For using `TorchAO int8 or int4` to load `text encoder & transformer` and complete inference code annotations,
    check [here](inference/cli_demo_cogview4_int8.py).
 3. For setting up a `gradio` GUI DEMO, check [here](inference/gradio_web_demo.py).
-## Installation
-```
-git clone https://github.com/THUDM/CogView4
-cd CogView4
-git clone https://huggingface.co/THUDM/CogView4-6B
-pip install -r inference/requirements.txt
-```
-## Quickstart
-12G VRAM
-```
-MODE=1 python inference/gradio_web_demo.py
-```
-24G VRAM 32G RAM
-```
-MODE=2 python inference/gradio_web_demo.py
-```
-24G VRAM 64G RAM
-```
-MODE=3 python inference/gradio_web_demo.py
-```
-48G VRAM 64G RAM
-```
-MODE=4 python inference/gradio_web_demo.py
-```
+
+
+## Fine-tuning
+
+This repository does not contain fine-tuning code, but you can fine-tune using the following two approaches, including both LoRA and SFT:
+
+1. [CogKit](https://github.com/THUDM/CogKit), our officially maintained system-level fine-tuning framework that supports CogView4 and CogVideoX.
+2. [finetrainers](https://github.com/a-r-r-o-w/finetrainers), a low-memory solution that enables fine-tuning on a single RTX 4090.
+3. If you want to train ControlNet models directly, you can refer to the [training code](https://github.com/huggingface/diffusers/tree/main/examples/cogview4-control) and train your own models.
 
 ## License
 

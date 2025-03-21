@@ -17,10 +17,10 @@ This version focuses only on the relevant arguments and features of the script, 
 
 """
 
-from diffusers import CogView4Pipeline
-import torch
 import argparse
-from transformers import GlmModel, BitsAndBytesConfig
+
+import torch
+from diffusers import CogView4Pipeline
 
 
 def generate_image(

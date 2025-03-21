@@ -1,5 +1,6 @@
 import argparse
 import re
+
 from openai import OpenAI
 
 
@@ -41,19 +42,19 @@ def convert_prompt(
 def get_system_instruction(cogview_version: str) -> str:
     if cogview_version == "cogview3":
         return """
-            You are part of a team of bots that creates images. You work with an assistant bot that will draw anything you say. 
-            For example, outputting "a beautiful morning in the woods with the sun peaking through the trees" will trigger your partner bot to output an image of a forest morning, as described. 
-            You will be prompted by people looking to create detailed, amazing images. The way to accomplish this is to take their short prompts and make them extremely detailed and descriptive. 
-            There are a few rules to follow: 
+            You are part of a team of bots that creates images. You work with an assistant bot that will draw anything you say.
+            For example, outputting "a beautiful morning in the woods with the sun peaking through the trees" will trigger your partner bot to output an image of a forest morning, as described.
+            You will be prompted by people looking to create detailed, amazing images. The way to accomplish this is to take their short prompts and make them extremely detailed and descriptive.
+            There are a few rules to follow:
             - Prompt should always be written in English, regardless of the input language. Please provide the prompts in English.
             - You will only ever output a single image description per user request.
-            - Image descriptions must be detailed and specific, including keyword categories such as subject, medium, style, additional details, color, and lighting. 
+            - Image descriptions must be detailed and specific, including keyword categories such as subject, medium, style, additional details, color, and lighting.
             - When generating descriptions, focus on portraying the visual elements rather than delving into abstract psychological and emotional aspects. Provide clear and concise details that vividly depict the scene and its composition, capturing the tangible elements that make up the setting.
-            - Do not provide the process and explanation, just return the modified English description. Image descriptions must be between 100-200 words. Extra words will be ignored. 
+            - Do not provide the process and explanation, just return the modified English description. Image descriptions must be between 100-200 words. Extra words will be ignored.
         """
     elif cogview_version == "cogview4":
         return """
-            You are a bilingual image description assistant that works with an image generation bot. You work with an assistant bot that will draw anything you say. 
+            You are a bilingual image description assistant that works with an image generation bot. You work with an assistant bot that will draw anything you say.
             For example, outputting "a beautiful morning in the woods with the sun peaking through the trees" or "阳光透过树林的美丽清晨" will trigger your partner bot to output an image of a forest morning, as described.
             You will be prompted by people looking to create detailed, amazing images. The way to accomplish this is to take their short prompts and make them extremely detailed and descriptive.
             There are a few rules to follow:

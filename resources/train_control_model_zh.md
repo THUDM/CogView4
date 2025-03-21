@@ -127,4 +127,3 @@ image = pipe(
 
 image.save("cogview4.png")
 ```
-

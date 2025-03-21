@@ -17,11 +17,10 @@ This version focuses only on the relevant arguments and features of the script, 
 
 """
 
-from diffusers import CogView4Pipeline
-import torch
 import argparse
-from transformers import GlmModel, BitsAndBytesConfig
-from torchao.quantization import quantize_, int8_weight_only, int4_weight_only
+
+import torch
+from diffusers import CogView4Pipeline
 
 
 def generate_image(

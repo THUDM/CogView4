@@ -16,7 +16,7 @@ the generator by adjusting the values of these channels.
 ### Preparing the Dataset
 
 In this example, we use [open_pose_controlnet](https://huggingface.co/datasets/raulc0399/open_pose_controlnet) for
-fine-tuning.  
+fine-tuning.
 You can also use your own dataset, but you will need to follow the `open_pose_controlnet` dataset format or modify the
 dataloader accordingly.
 

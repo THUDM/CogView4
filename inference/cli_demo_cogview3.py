@@ -9,9 +9,10 @@ python cli_demo.py --prompt "A beautiful sunset over a mountain" --width 1024 --
 Additional options are available to specify the model path, guidance scale, number of inference steps, image generation type, and output paths.
 """
 
-from diffusers import CogView3PlusPipeline
-import torch
 import argparse
+
+import torch
+from diffusers import CogView3PlusPipeline
 
 
 def generate_image(

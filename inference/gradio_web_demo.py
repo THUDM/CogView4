@@ -9,27 +9,43 @@ OPENAI_API_KEY="your ZhipuAI API keys" OPENAI_BASE_URL="https://open.bigmodel.cn
 ```
 
 We use [glm-4-plus](https://bigmodel.cn/dev/howuse/glm-4) as the large model for prompt refinement. You can also choose other large models, such as GPT-4o, for refinement.”
+
+For Different GPU Memory Usage:
+
+12G VRAM
+```
+MODE=1 OPENAI_API_KEY="your ZhipuAI API keys" OPENAI_BASE_URL="https://open.bigmodel.cn/api/paas/v4" python gradio_web_demo.py
+```
+24G VRAM 32G RAM
+```
+MODE=2 OPENAI_API_KEY="your ZhipuAI API keys" OPENAI_BASE_URL="https://open.bigmodel.cn/api/paas/v4" python gradio_web_demo.py
+```
+24G VRAM 64G RAM
+```
+MODE=3 OPENAI_API_KEY="your ZhipuAI API keys" OPENAI_BASE_URL="https://open.bigmodel.cn/api/paas/v4" python gradio_web_demo.py
+```
+40G VRAM 64G RAM and Larger
+```
+OPENAI_API_KEY="your ZhipuAI API keys" OPENAI_BASE_URL="https://open.bigmodel.cn/api/paas/v4" python gradio_web_demo.py
+```
 """
 
+import gc
 import os
+import random
 import re
 import threading
 import time
 from datetime import datetime, timedelta
 
 import gradio as gr
-import random
-from diffusers import CogView4Pipeline
-from diffusers.models import AutoencoderKL, CogView4Transformer2DModel
 import torch
+from diffusers import CogView4Pipeline
+from diffusers.models import CogView4Transformer2DModel
 from openai import OpenAI
-
+from torchao.quantization import int8_weight_only, quantize_
 from transformers import GlmModel
-from torchao.quantization import quantize_, int8_weight_only
-import gc
 
-os.environ["OPENAI_BASE_URL"] = "https://open.bigmodel.cn/api/paas/v4"
-mode = os.environ.get("MODE", "1")
 
 total_vram_in_gb = torch.cuda.get_device_properties(0).total_memory / 1073741824
 
@@ -39,14 +55,15 @@ print(f"\033[32m显卡型号：{torch.cuda.get_device_name()}\033[0m")
 print(f"\033[32m显存大小：{total_vram_in_gb:.2f}GB\033[0m")
 
 if torch.cuda.get_device_capability()[0] >= 8:
-    print(f"\033[32m支持BF16\033[0m")
+    print("\033[32m支持BF16\033[0m")
     dtype = torch.bfloat16
 else:
-    print(f"\033[32m不支持BF16，使用FP16\033[0m")
+    print("\033[32m不支持BF16，使用FP16\033[0m")
     dtype = torch.float16
-device = "cuda" if torch.cuda.is_available() else "cpu"
 
-model_path = "/share/zyx/CogView4-6B-0228"
+device = "cuda" if torch.cuda.is_available() else "cpu"
+model_path = "THUDM/CogView4-6B"
+mode = os.environ.get("MODE", "0")
 
 text_encoder = None
 transformer = None
@@ -142,7 +159,7 @@ def convert_prompt(
             if prompt:
                 prompt = clean_string(prompt)
                 break
-        except Exception as e:
+        except Exception:
             pass
 
     return prompt
@@ -310,7 +327,7 @@ with gr.Blocks(theme=gr.themes.Soft()) as demo:
                 with gr.Row():
                     ex_btn = gr.Button(value=ex, variant="secondary", elem_id=f"ex_btn_{i}", scale=3)
                     ex_img = gr.Image(
-                        value=f"inference/img/img_{i + 1}.png",
+                        value=f"img/img_{i + 1}.png",
                         label="Effect",
                         interactive=False,
                         height=130,
